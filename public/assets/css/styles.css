@@ -1,0 +1,58 @@
+li {
+	color: #666;
+}
+
+.uk-logo {
+	max-width: 175px;;
+}
+
+#myChart {
+	min-height:350px;
+	min-width: 400px;
+	max-height: 800px;
+	max-width: 800px;
+	margin: auto;
+}
+
+#trend-text {
+	color: white;
+}
+
+.uptrend {
+	background: green
+}
+
+.downtrend {
+	background: red;
+}
+
+.no-trend {
+	background: #666;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+#newsfeed {
+	margin: 50px;
+}
+
+.article-image {
+	padding-bottom: 10px;
+	min-height: 125px;;
+}
+
+#company-card {
+	text-align: center;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+	color: #666;
+}

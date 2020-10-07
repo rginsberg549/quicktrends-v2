@@ -1,4 +1,42 @@
-<div class="jumbotron">
-  <h1 class="display-4">Welcome!</h1>
-  <p class="lead">This our marketing/landing page</p>
-</div>
+<head>
+  <style>
+    body {
+      background-color: #666;
+    }
+    header {
+      background-color: white;
+    }
+    #title {
+      font-size: 2rem;
+    }
+    #signup-button {
+      color: white;
+      border-radius: 20px;
+    }
+    .top-buttons {
+      display: inline-block;
+    }
+    .btn {
+      font-size: 1.5rem;
+    }
+    .btn:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  </style>
+</head>
+<header class="row justify-content-between py-2">
+  <div class="col">
+    <div id="title">
+      Quick Trends
+    </div>
+  </div>
+  <div class="col d-flex justify-content-end">
+    <div class="top-buttons">
+      <button id="login-button" class="btn">Login</button>
+    </div>
+    <div class="top-buttons">
+      <button id="signup-button" class="btn btn-dark">Sign Up</button>
+    </div>
+  </div>
+</header>

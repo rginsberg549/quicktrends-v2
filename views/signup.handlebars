@@ -1,18 +1,18 @@
-<form>
+<form action="/api/signup" method="POST">
   <div class="row">
     <div class="col">
-      <input type="text" class="form-control" placeholder="First name">
+      <input name="first_name" type="text" class="form-control" placeholder="First name">
     </div>
     <div class="col">
-      <input type="text" class="form-control" placeholder="Last name">
+      <input name="last_name" type="text" class="form-control" placeholder="Last name">
     </div>
       <div class="row">
     <div class="col">
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email">
     </div>
     <div class="col">
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <input name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
     </div>
   </div>
-  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

@@ -4,38 +4,43 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var express = require("express");
-var exphbs = require("express-handlebars");
+const express = require("express");
+const exphbs = require("express-handlebars");
+const session = require("express-session");
+const passport = require("./config/passport");
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const db = require("./models");
 
-// Requiring our models for syncing
-var db = require("./models");
-
-// Sets up the Express app to handle data parsing
+// Creating express app and configuring middleware needed for authentication
+const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("public"));
+// We need to use sessions to keep track of our user's login status
+app.use(
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Sets the view enngine to Handlebars
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Static directory
-app.use(express.static("public"));
-
 // Routes
 // =============================================================
 require("./routes/api/stockRoutes.js")(app);
+require('./routes/api/auth.js')(app);
 require("./routes/html/html_routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
+db.sequelize.sync().then(function () {
+  app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });
 });

@@ -4,7 +4,7 @@ const rapidAPIkey = "c08946528f1aa8ab38e951cb961b2d08";
 
 module.exports = function(app) {
 
-  app.get("/api/stocks/:stock", function(req, res) {
+  app.post("/api/stocks/:stock", function(req, res) {
     let stockSymbol = req.params.stock;
 
     axios({
@@ -24,8 +24,6 @@ module.exports = function(app) {
       })
       .catch((error)=>{
         console.log(error)
-      })
-
-    res.json(res, err);
+      });
   });
 }

@@ -53,20 +53,10 @@
       font-size: 2rem;
       text-align: center;
     }
-
-    .img-back {
-      background-repeat: no-repeat;
-      background-size: 200rem;
-      background-position: center;
-    }
-
     #graph-img {
-      background-image: url("http://localhost:3000/assets/pictures/sample-graph.JPG")
+      width: 100%;
     }
 
-    #overview-img {
-      background-image: url("http://localhost:3000/assets/pictures/sample-overview.JPG")
-    }
   </style>
 </head>
 <header class="row justify-content-between py-2">
@@ -84,21 +74,26 @@
     </div>
   </div>
 </header>
+
+
 <section class="row mt-5 justify-content-center">
-  <div id="graph-img" class="col-6 img-back">
+  <div class="col-6 img-back">
+    <img id="graph-img" src="http://localhost:3000/assets/pictures/sample-graph.JPG">
   </div>
-  <div class="col-6 pt-2">
+  <div class="col-6 pt-2 align-self-center">
     <div id="intro">
       Analyze trends of any company listed on the Nasdaq stock market
     </div>
   </div>
 </section>
+
 <section class="row mt-3 justify-content-between">
-  <div id="overview-img" class="col-6 img-back">
-  </div>
-  <div class="col-6">
+  <div class="col-6 align-self-center">
     <div id="intro">
       Get a quick overview of the most relevant details of your company of question before taking a deep dive.
     </div>
+  </div>
+  <div class="col-6 img-back">
+    <img id="overview-img" src="http://localhost:3000/assets/pictures/sample-overview.JPG">
   </div>
 </section>

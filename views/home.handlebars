@@ -1,42 +1,104 @@
 <head>
   <style>
     body {
-      background-color: #666;
+      background-color: rgb(90, 90, 230);
     }
+
     header {
       background-color: white;
     }
+
     #title {
       font-size: 2rem;
+      font-weight: 600;
     }
+
     #signup-button {
+      background-color: rgb(90, 90, 255);
       color: white;
       border-radius: 20px;
     }
+
+    #signup-button:hover {
+      background-color: rgb(50, 50, 255);
+    }
+
+    #login-button:hover {
+      color: rgb(0, 0, 255);
+    }
+
     .top-buttons {
       display: inline-block;
     }
+
     .btn {
       font-size: 1.5rem;
+      font-weight: 600;
     }
+
     .btn:focus {
       outline: none;
       box-shadow: none;
+    }
+
+    img {
+      border-radius: 10px;
+      margin: auto;
+      display: block;
+    }
+
+    #intro {
+      background-color: white;
+      border-radius: 10px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .img-back {
+      background-repeat: no-repeat;
+      background-size: 200rem;
+      background-position: center;
+    }
+
+    #graph-img {
+      background-image: url("http://localhost:3000/assets/pictures/sample-graph.JPG")
+    }
+
+    #overview-img {
+      background-image: url("http://localhost:3000/assets/pictures/sample-overview.JPG")
     }
   </style>
 </head>
 <header class="row justify-content-between py-2">
   <div class="col">
     <div id="title">
-      Quick Trends
+      QuickTrends
     </div>
   </div>
   <div class="col d-flex justify-content-end">
     <div class="top-buttons">
-      <button id="login-button" class="btn">Login</button>
+      <button type="button" onclick="location.href='/login'" id="login-button" class="btn">Login</button>
     </div>
     <div class="top-buttons">
-      <button id="signup-button" class="btn btn-dark">Sign Up</button>
+      <button type="button" onclick="location.href='/signup'" id="signup-button" class="btn">Sign Up</button>
     </div>
   </div>
 </header>
+<section class="row mt-5 justify-content-center">
+  <div id="graph-img" class="col-6 img-back">
+  </div>
+  <div class="col-6 pt-2">
+    <div id="intro">
+      Analyze trends of any company listed on the Nasdaq stock market
+    </div>
+  </div>
+</section>
+<section class="row mt-3 justify-content-between">
+  <div id="overview-img" class="col-6 img-back">
+  </div>
+  <div class="col-6">
+    <div id="intro">
+      Get a quick overview of the most relevant details of your company of question before taking a deep dive.
+    </div>
+  </div>
+</section>

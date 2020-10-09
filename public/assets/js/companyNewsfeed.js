@@ -10,7 +10,7 @@ function getArticleSearchSettings(q) {
     var articleSearchSettings = {
         "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?" + query + nytAPIKey,
         "method": "GET",
-    }
+    }  
     return articleSearchSettings
 }
 

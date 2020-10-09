@@ -1,3 +1,7 @@
+body {
+	background-color: lightgrey !important;
+}
+
 li {
 	color: #666;
 }
@@ -44,7 +48,7 @@ li {
 }
 
 #company-card {
-	text-align: center;
+	/* text-align: center; */
 	margin-left: auto;
     margin-right: auto;
 }
@@ -68,3 +72,8 @@ a {
 
 
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}

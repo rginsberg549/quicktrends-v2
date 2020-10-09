@@ -1,4 +1,4 @@
-<section class="row mx-auto d-flex justify-content-center m-3">
+<section class="row mx-auto d-flex justify-content-center m-3 mb-5">
   <form class="mx-auto d-flex justify-content-center" action="" method="POST">
     <input id="stockInput" class="" type="text" placeholder="ex. AAPL,MSFT">
     <button id="submit" value="stock-symbol" class="btn btn-secondary">Search</button>
@@ -6,29 +6,43 @@
   <span id="time-remaining"></span>
 </section>
 
-<section id="company-card-section" class="row">
-  <div id="company-card" class="col">
-    <img class="company-image" width="40" height="40">
-    <h3 class="company-name">COMPANY NAME</h3>
-    <p class="date"><time datetime="2016-04-01T19:00">10-10-2020</time></p>
-    <p id="trend-text" class="">Trend Text</p>
-    <p class="ceo-name">CEO-NAME</p>
-    <p class="industry">INDUSTRY</p>
-    <p class="current-price">CURRENT PRICE</p>
-    <p class="eps">EPS</p>
-    <p class="dividends">DIVIDENDS</p>
-    <p class="gross-profit-ratio">GROSS PROFIT RATIO</p>
-    <p class="net-income-ratio" NET INCOME RATIO></p>
+<section id="company-card-section" class="row mx-auto d-flex justify-content-center">
+  <div>
+    <div id="recents-card" class="card h-100 col-sm-auto" style="width: 18rem">
+      <h2>Recent Searches</h2>
+      <ul id="recents-list" class="list-group list-group-flush">
+        <li class="list-group-item">Hello World</li>
+        <li class="list-group-item">Hello World</li>
+        <li class="list-group-item">Hello World</li>
+        <li class="list-group-item">Hello World</li>
+      </ul>
+    </div>
   </div>
-  </div>
-  </div>
+  <div id="company-card" class="card h-100 col-sm-auto mx-0" style="width: 40rem ">
+    <div class="mx-auto py-2 d-flex justify-content-center">
+      <img class="company-image mr-3" width="40" height="40">
+      <h2 class="company-name">COMPANY NAME</h2>
+    </div>
+    <ul id="company-card-list" class="mx-5">
+      <li id="trend-text" class="h6">Trend Text</li>
+      <li class="date h6"><time datetime="2016-04-01T19:00">10-10-2020</time></li>
+      <li class="ceo-name h6">CEO-NAME</li>
+      <li class="industry h6">INDUSTRY</li>
+      <li class="current-price h6">CURRENT PRICE</li>
+      <li class="eps h6">EPS</li>
+      <li class="dividends h6">DIVIDENDS</li>
+      <li class="gross-profit-ratio h6">GROSS PROFIT RATIO</li>
+      <li class="net-income-ratio h6">NET INCOME RATIO</li>
+    </ul>
+    <div id="stock-chart-section" class="row">
+    </div>
   </div>
 </section>
 
-<section id="stock-chart-section" class="row">
-</section>
+{{!-- <section id="stock-chart-section" class="row">
+</section> --}}
 
-<section id="newsfeed" class="">
+{{!-- <section id="newsfeed" class="">
   <h3 class="newsfeed-section-title"></h3>
   <div>
     <div class="">
@@ -37,7 +51,21 @@
       </div>
     </div>
   </div>
-</section>
+</section> --}}
+
+<div id="newsfeed" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
 <script src="/assets/js/dashboardFinancials.js"></script>
 <script src="/assets/js/trendChart.js"></script>

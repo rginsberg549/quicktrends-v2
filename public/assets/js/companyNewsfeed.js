@@ -24,7 +24,7 @@ function getCompanyArticles(q) {
         var articleData = (response.response.docs)
         setTimeout(function() {
             for (let index = 0; index < articleData.length -1; index++) {
-                var articleListItem = $("<li>");
+                var articleListItem = $("<div>");
 
                 var articleListImage = $("<img>");
                 

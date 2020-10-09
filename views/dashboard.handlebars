@@ -1,6 +1,6 @@
 <section class="row mx-auto d-flex justify-content-center m-3">
-  <form class="mx-auto d-flex justify-content-center" action="" method="POST">
-    <input id="stockInput" class="" type="text" placeholder="ex. AAPL,MSFT">
+  <form class="mx-auto d-flex justify-content-center" action="/dashboard" method="POST">
+    <input id="stockInput" name="stock" class="" type="text" placeholder="ex. AAPL,MSFT">
     <button id="submit" value="stock-symbol" class="btn btn-secondary">Search</button>
   </form>
   <span id="time-remaining"></span>
@@ -10,7 +10,7 @@
   <div id="company-card" class="col">
     <img class="company-image" width="40" height="40">
     <h3 class="company-name">COMPANY NAME</h3>
-    <p class="date"><time datetime="2016-04-01T19:00">10-10-2020</time></p>
+    <p class="date"><time datetime="2016-04-01T19:00"></time>{{date}}</p>
     <p id="trend-text" class="">Trend Text</p>
     <p class="ceo-name">CEO-NAME</p>
     <p class="industry">INDUSTRY</p>

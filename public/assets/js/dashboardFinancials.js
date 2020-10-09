@@ -168,4 +168,4 @@ function getStockSymbol() {
     return input;
 }
 
-submit.on("click", renderCompanyValuation);
+//submit.on("click", renderCompanyValuation);

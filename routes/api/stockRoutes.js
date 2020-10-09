@@ -4,7 +4,7 @@ const rapidAPIkey = "c08946528f1aa8ab38e951cb961b2d08";
 
 module.exports = function(app) {
 
-  app.get("/api/stocks/:stock", function(req, res) {
+  app.post("/dashboard", function(req, res) {
     let stockSymbol = req.params.stock;
 
     axios({
@@ -19,13 +19,13 @@ module.exports = function(app) {
       "apikey": rapidAPIkey
       }
       })
-      .then((response)=>{
-        console.log(response)
+      .then(function (response) {
+        let incomeStatement = response['data'][0];
+        console.log(incomeStatement);
+        res.render("dashboard", incomeStatement);
       })
       .catch((error)=>{
-        console.log(error)
-      })
-
-    res.json(res, err);
+        console.log(error);
+      });
   });
 }

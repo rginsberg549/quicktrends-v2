@@ -3,7 +3,9 @@
     /* INCLUDE RESPONSIVENESS HERE TO SCALE UP FOR DESKTOP USAGE */
     body {
       /*background-color: rgb(90, 90, 255);*/
-      background-image: url("https://m.economictimes.com/thumb/msid-73181285,width-3684,height-2068,resizemode-4,imgsize-550306/stocks-market.jpg");
+      background-image: url("assets/pictures/background.png");
+      background-repeat: no-repeat;
+      background-size: 300%;
     }
 
     #form-parent {
@@ -20,30 +22,56 @@
     #password-div {
       margin-bottom: 0;
     }
+
+    @media screen and (min-width: 1242px) {
+      body {
+        background-size: 100%;
+      }
+    }
   </style>
 </head>
 <div class="row justify-content-center">
   <!-- This first column is to be used to change the background image to be shown next to the login form. See robinhood login... -->
   <div class="col-12">
-    <img src="">
+    <img src="" />
   </div>
-
   <div id="form-parent" class="col-6 align-self-center mt-5 p-3">
     <form action="/api/login" method="POST">
       <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <label for="exampleInputEmail1">
+          Email address
+        </label>
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <small id="emailHelp" class="form-text text-muted">
+          We'll never share your email with anyone else.
+        </small>
       </div>
       <div id="password-div" class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input name="password" type="password" class="form-control" id="exampleInputPassword1">
+        <label for="exampleInputPassword1">
+          Password
+        </label>
+        <input
+          name="password"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
       </div>
       <div class="form-group">
         <!-- Currently a dead link -->
-        <a href="">Forgot your password?</a>
+        <a href="/signup">
+          Don't have an account?
+        </a>
       </div>
-      <button id="sign-in" type="submit" class="btn">Sign In</button>
+      <button id="sign-in" type="submit" class="btn">
+        Sign In
+      </button>
     </form>
   </div>
 </div>

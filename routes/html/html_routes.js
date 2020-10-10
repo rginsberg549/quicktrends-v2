@@ -5,6 +5,7 @@
 // Dependencies
 // =============================================================
 var path = require("path");
+var db = require("../../models/");
 
 // Routes
 // =============================================================
@@ -30,10 +31,12 @@ module.exports = function(app) {
   });
 
   app.get("/dashboard", function(req, res) {
-    res.render("dashboard")
-  });
-
-  app.get("/dashboard", function(req, res) {
-    res.render("dashboard");
+    db.Stock.findAll({}).then(function(data){
+      console.log(data);
+      let stocks = {
+        stocks: data
+      };
+      res.render("dashboard", stocks);
+    })
   });
 }

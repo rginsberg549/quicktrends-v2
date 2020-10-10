@@ -1,28 +1,11 @@
 <head>
   <style>
-    /* INCLUDE RESPONSIVENESS HERE TO SCALE UP FOR DESKTOP USAGE */
+    /* Not sure how to move these two styles to the styles.css file because they effect the body element */
     body {
-      /*background-color: rgb(90, 90, 255);*/
       background-image: url("assets/pictures/background.png");
       background-repeat: no-repeat;
       background-size: 300%;
     }
-
-    #form-parent {
-      border-radius: 10px;
-      background-color: white;
-    }
-
-    #sign-in {
-      margin-top: 2rem;
-      background-color: rgb(90, 90, 255);
-      color: white;
-    }
-
-    #password-div {
-      margin-bottom: 0;
-    }
-
     @media screen and (min-width: 1242px) {
       body {
         background-size: 100%;
@@ -30,7 +13,7 @@
     }
   </style>
 </head>
-<div class="row justify-content-center">
+<div id="signup-main" class="row justify-content-center">
   <!-- This first column is to be used to change the background image to be shown next to the login form. See robinhood login... -->
   <div class="col-12">
     <img src="" />

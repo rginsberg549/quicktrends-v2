@@ -31,7 +31,13 @@ module.exports = function (app) {
   });
 
   app.get("/dashboard", checkAuth, function (req, res) {
-    db.Stock.findAll({}).then((data) => {
+    db.Stock.findAll({
+      where: {
+        // user_id is the column name in the database
+        // req.user.id is the id of the user signed in
+        user_id: req.user.id,
+      },
+    }).then((data) => {
       console.log(data);
       let stocks = [];
       data.forEach((element) => {

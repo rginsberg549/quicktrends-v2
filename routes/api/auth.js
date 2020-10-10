@@ -8,7 +8,7 @@ module.exports = function (app) {
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
     // Sending back a password, even a hashed password, isn't a good idea
-    res.redirect("/dashboard")
+    res.redirect("/dashboard");
   });
 
   app.post("/api/signup", (req, res) => {

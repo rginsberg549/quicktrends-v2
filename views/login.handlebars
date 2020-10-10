@@ -1,9 +1,14 @@
 <head>
   <style>
-    /* INCLUDE RESPONSIVENESS HERE TO SCALE UP FOR DESKTOP USAGE */
     body {
-      /*background-color: rgb(90, 90, 255);*/
-      background-image: url("https://m.economictimes.com/thumb/msid-73181285,width-3684,height-2068,resizemode-4,imgsize-550306/stocks-market.jpg");
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("assets/pictures/backdrop.png");
+      background-size: cover no-repeat;
+      overflow-x: hidden;
+    }
+    
+    @media screen and (min-width: 1242px) {
+      body {
+      }
     }
 
     #form-parent {
@@ -30,7 +35,6 @@
   </div>
   <div class="col d-flex justify-content-end">
     <div class="top-buttons">
-      <button type="button" onclick="location.href='/logout'" id="login-button" class="btn">Login</button>
       <button type="button" onclick="location.href='/'" id="signup-button" class="btn bg-info">Home</button>
     </div>
 </header>

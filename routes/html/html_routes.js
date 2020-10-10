@@ -17,16 +17,16 @@ module.exports = function (app) {
     res.render("home");
   });
 
-  app.get("/login", function (req, res) {
+  app.get("/login", checkNotAuth, function (req, res) {
     res.render("login");
   });
 
-  app.get("/logout", function (req, res) {
+  app.get("/logout", checkAuth, function (req, res) {
     req.logout();
     res.redirect("/");
   });
 
-  app.get("/signup", function (req, res) {
+  app.get("/signup", checkNotAuth, function (req, res) {
     res.render("signup");
   });
 

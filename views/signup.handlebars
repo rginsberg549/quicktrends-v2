@@ -1,18 +1,99 @@
-<form action="/api/signup" method="POST">
-  <div class="row">
-    <div class="col">
-      <input name="first_name" type="text" class="form-control" placeholder="First name">
-    </div>
-    <div class="col">
-      <input name="last_name" type="text" class="form-control" placeholder="Last name">
-    </div>
-      <div class="row">
-    <div class="col">
-      <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email">
-    </div>
-    <div class="col">
-      <input name="password" type="password" class="form-control" id="inputPassword4" placeholder="Password">
-    </div>
+<head>
+  <style>
+    /* INCLUDE RESPONSIVENESS HERE TO SCALE UP FOR DESKTOP USAGE */
+    body {
+      /*background-color: rgb(90, 90, 255);*/
+      background-image: url("assets/pictures/background.png");
+      background-repeat: no-repeat;
+      background-size: 300%;
+    }
+
+    #form-parent {
+      border-radius: 10px;
+      background-color: white;
+    }
+
+    #sign-in {
+      margin-top: 2rem;
+      background-color: rgb(90, 90, 255);
+      color: white;
+    }
+
+    #password-div {
+      margin-bottom: 0;
+    }
+
+    @media screen and (min-width: 1242px) {
+      body {
+        background-size: 100%;
+      }
+    }
+  </style>
+</head>
+<div class="row justify-content-center">
+  <!-- This first column is to be used to change the background image to be shown next to the login form. See robinhood login... -->
+  <div class="col-12">
+    <img src="" />
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+  <div id="form-parent" class="col-6 align-self-center mt-5 p-3">
+    <form action="/api/login" method="POST">
+      <div class="form-group">
+        <label for="first_name">
+          First Name
+        </label>
+        <input
+          name="first_name"
+          id="first_name"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="last_name">
+          Last Name
+        </label>
+        <input
+          name="last_name"
+          id="last_name"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">
+          Email address
+        </label>
+        <input
+          name="email"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <small id="emailHelp" class="form-text text-muted">
+          We'll never share your email with anyone else.
+        </small>
+      </div>
+      <div id="password-div" class="form-group">
+        <label for="exampleInputPassword1">
+          Password
+        </label>
+        <input
+          name="password"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+      </div>
+      <div class="form-group">
+        <!-- Currently a dead link -->
+        <a href="/login">
+          Already have an account?
+        </a>
+      </div>
+      <button id="sign-in" type="submit" class="btn">
+        Create Account
+      </button>
+    </form>
+  </div>
+</div>

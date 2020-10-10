@@ -31,12 +31,14 @@ module.exports = function(app) {
   });
 
   app.get("/dashboard", function(req, res) {
-    db.Stock.findAll({}).then(function(data){
+    db.Stock.findAll({}).then((data) => {
       console.log(data);
-      let stocks = {
-        stocks: data
-      };
-      res.render("dashboard", stocks);
+      let stocks = [];
+      data.forEach((element) => {
+        stocks.push(element.dataValues);
+      });
+      console.log(stocks);
+      res.render("dashboard", {stocks: stocks});
     })
-  });
+  })
 }

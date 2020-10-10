@@ -8,9 +8,10 @@ function submitStock(event) {
     console.log(stock)
     $.ajax({
         method: "POST",
-        url: "http://localhost:3001/api/stocks/" + stock
-    }).then(function() {
-        location.reload();
+        url: "http://localhost:3001/api/stocks/" + stock})
+        .then(function() {
+            console.log("Stock created!")
+            location.reload()
     })
 }
 

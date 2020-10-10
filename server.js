@@ -9,9 +9,10 @@ const exphbs = require("express-handlebars");
 const session = require("express-session");
 const passport = require("./config/passport");
 
+
 // Sets up the Express App
 // =============================================================
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
@@ -31,15 +32,16 @@ app.use(passport.session());
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+
 // Routes
 // =============================================================
-require("./routes/api/stockRoutes.js")(app);
-require('./routes/api/auth.js')(app);
+require("./routes/api/stock-api-routes.js")(app);
+require("./routes/api/auth.js")(app);
 require("./routes/html/html_routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync().then(function () {
+db.sequelize.sync({ force: true }).then(function () {
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });

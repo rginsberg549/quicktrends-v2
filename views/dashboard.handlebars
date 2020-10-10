@@ -1,29 +1,36 @@
-<section class="row mx-auto d-flex justify-content-center m-3">
+<header class="row navbar navbar-light bg-light border">
+  <div class="col">
+    <div id="title" class="text-align-middle">
+      <img class="logo img-fluid" src="http://localhost:3000/assets/pictures/logo_transparent.png" alt="">
+    </div>
+  </div>
+  <div class="col d-flex justify-content-end">
+    <div class="top-buttons">
+      <button type="button" onclick="location.href='/logout'" id="login-button" class="btn">Logout</button>
+      <button type="button" onclick="location.href='/'" id="signup-button" class="btn bg-info">Home</button>
+    </div>
+</header>
+
+
+<section class="row mx-auto d-flex justify-content-center m-3 mb-5">
   <form class="mx-auto d-flex justify-content-center" action="" method="POST">
     <input id="stockInput" class="" type="text" placeholder="ex. AAPL,MSFT">
-    <button id="submit" value="stock-symbol" class="btn btn-secondary">Search</button>
+    <button id="stockSearch" value="stock-symbol" class="btn btn-secondary">Search</button>
   </form>
   <span id="time-remaining"></span>
 </section>
-  
-<section id="company-card-section" class="row">
-    <div id="company-card" class="col">
-      <img class="company-image" width="40" height="40">
-      <h3 class="company-name">COMPANY NAME</h3>
-      <p class="date"><time datetime="2016-04-01T19:00">10-10-2020</time></p>
-      <p id="trend-text" class="">Trend Text</p>
-      <p class="ceo-name">CEO-NAME</p>
-      <p class="industry">INDUSTRY</p>
-      <p class="current-price">CURRENT PRICE</p>
-      <p class="eps">EPS</p>
-      <p class="dividends">DIVIDENDS</p>
-      <p class="gross-profit-ratio">GROSS PROFIT RATIO</p>
-      <p class="net-income-ratio"NET INCOME RATIO></p>
-          </div>
-        </div>
-      </div>
-    </div>   
-</section>
+
+<section id="company-card-section" class="row mx-auto d-flex justify-content-center">
+  <div>
+    <div id="recents-card" class="card h-100 col" style="width: 18rem">
+      <h2>Recent Searches</h2>
+      <ul id="recents-list" class="list-group list-group-flush">
+        {{#each stocks}}
+        <li><button>{{this.name}}</button></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
 
 <section id="stock-chart-section" class="row">
 </section>
@@ -32,14 +39,13 @@
   <h3 class="newsfeed-section-title"></h3>
   <div>
     <div class="">
-        <div class="">
-            <ul id="company-article-list" class=""></ul>
-        </div>  
+      <div class="">
+        <ul id="company-article-list" class=""></ul>
+      </div>
     </div>
-</div>
+  </div>
 </section>
 
-<script src="/assets/js/dashboardFinancials.js"></script>
+<script src="/assets/js/stockSearch.js"></script>
 <script src="/assets/js/trendChart.js"></script>
 <script src="/assets/js/companyNewsfeed.js"></script>
-<script src="/assets/js/searchAction.js"></script>

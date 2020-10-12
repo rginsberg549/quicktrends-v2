@@ -32,18 +32,17 @@ module.exports = function (app) {
 
   app.get("/dashboard", checkAuth, function (req, res) {
     db.Stock.findAll({
+      attributed: ["name"],
       where: {
         // user_id is the column name in the database
         // req.user.id is the id of the user signed in
         user_id: req.user.id,
       },
     }).then((data) => {
-      console.log(data);
       let stocks = [];
       data.forEach((element) => {
         stocks.push(element.dataValues);
       });
-      console.log(stocks);
       res.render("dashboard", { stocks: stocks });
     });
   });

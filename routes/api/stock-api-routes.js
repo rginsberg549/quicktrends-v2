@@ -40,7 +40,7 @@ module.exports = function (app) {
       }
       })
       .then((response) => {
-        console.log(response)
+        //console.log(response)
         db.Stock.create({
           name: req.params.name,
           user_id: req.user.id,

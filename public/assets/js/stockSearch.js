@@ -10,10 +10,11 @@ function submitStock(event) {
   $.ajax({
     method: "POST",
     url: "/api/stocks/" + stock,
-  }).then(function () {
-    location.reload();
-  });
-}
+  }).then(function (data) {
+      location.replace("/dashboard/" + data.id);
+    });
+  }
+
 
 function deleteStock() {
   const data_id = trashBtn.parent().data("id");

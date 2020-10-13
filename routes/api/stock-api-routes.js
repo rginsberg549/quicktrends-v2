@@ -40,6 +40,7 @@ module.exports = function (app) {
       }
       })
       .then((response) => {
+        //console.log(response)
         db.Stock.create({
           name: req.params.name,
           user_id: req.user.id,
@@ -52,6 +53,7 @@ module.exports = function (app) {
           image:response.data[0].image,
         }).then(async function (dbStock) {
           return res.json(dbStock);
+     
         });
       })
       .catch((error) => {

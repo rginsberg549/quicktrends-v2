@@ -42,7 +42,6 @@ module.exports = function (app) {
         apikey: apikey,
       },
     }).then((profile) => {
-      console.log(profile);
 
       axios({
         method: "GET",
@@ -60,13 +59,19 @@ module.exports = function (app) {
         params: {
           apikey: apikey,
         },
-      }).then((incomeStatement) => {
-        db.Stock.findOne({
-          where: {
-            user_id: req.user.id,
-            name: stockSymbol,
-          },
-        }).then((stockExists) => {
+      }).then((incomeStatement)=> {
+        
+        axios({
+          method: "GET",
+          url: "http://localhost:3001/api/trend/" + stockSymbol
+        }).then((trend) => {
+          console.log(trend.data.trend);
+          db.Stock.findOne({
+            where: {
+              user_id: req.user.id,
+              name: stockSymbol,
+            },
+          }).then((stockExists) => {
           if (stockExists == null) {
             console.log("Posting a new stock");
             db.Stock.create({
@@ -81,7 +86,8 @@ module.exports = function (app) {
               image: profile.data[0].image,
               eps: incomeStatement.data[0].eps,
               grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
-              netIncomeRatio: incomeStatement.data[0].netIncomeRatio
+              netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
+              trend: trend.data.trend
             }).then(function (dbStock) {
               return res.json(dbStock);
             });
@@ -98,7 +104,8 @@ module.exports = function (app) {
                 image: profile.data[0].image,
                 eps: incomeStatement.data[0].eps,
                 grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
-                netIncomeRatio: incomeStatement.data[0].netIncomeRatio
+                netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
+                trend: trend.data.trend
               },
               {
                 where: {
@@ -136,4 +143,103 @@ module.exports = function (app) {
   })
 });
 
+app.get("/api/trend/:id", function (req, res) {
+  const apiKey = "ZY0GHO5HP0KA7RXS";
+  const stockSymbol = req.params.id.toUpperCase();
+
+  var stockLabels = [];
+  let stockPrices8 = [];
+  let stockPrices21 = [];
+  let stockRealPriceBucket = [];
+  let stockRealPrice = [];
+
+
+  axios({
+    method: "GET",
+    url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="  + stockSymbol + "&apikey=" + apiKey
+  }).then(function (data) {
+    
+    var convertSeriesObj = Object.entries(data.data["Time Series (Daily)"]);
+    
+    for (i = 0; i < 50; i++) {
+      stockRealPrice.unshift(convertSeriesObj[i][1]["1. open"]);
+    }
+    
+    for (i = 0; i < 30; i++) {
+      stockRealPriceBucket.unshift(convertSeriesObj[i][1]["1. open"]);
+      stockLabels.unshift(convertSeriesObj[i][0]);
+    }
+    
+    for (i = 0; i > -30; i--) {
+      var currentInt = 50 + i;
+      var ArrStartNum = currentInt - 21;
+      var divider = 1;
+      var total = 0;
+      var divideIt = 0;
+      
+      while (ArrStartNum < currentInt) {
+        total += parseFloat(stockRealPrice[ArrStartNum]);
+        divideIt = total / divider;
+        ArrStartNum++;
+        divider++;
+      }
+      
+      stockPrices21.unshift(divideIt.toFixed(2));
+    }
+
+    for (i = 0; i > -30; i--) {
+      var currentInt = 50 + i;
+      var ArrStartNum = currentInt - 8;
+      var divider = 1;
+      var total = 0;
+      var divideIt = 0;
+      while (ArrStartNum < currentInt) {
+        total += parseFloat(stockRealPrice[ArrStartNum]);
+        divideIt = total / divider;
+        ArrStartNum++;
+        divider++;
+      }
+      
+      stockPrices8.unshift(divideIt.toFixed(2));
+    }
+
+    let trend
+    
+    function checkUptrend() {
+      for (var i = 23; i < 31; i++) {
+        if (stockPrices8[i] < stockPrices21[i]) {
+          checkdownTrend();
+          break;
+        } else {
+          uptrendLoaded();
+        }
+      }
+    }
+
+    function uptrendLoaded() {
+      trend = {trend: "Uptrend Detected"}
+    }
+
+      function checkdownTrend() {
+        for (var i = 23; i < 31; i++) {
+          if (stockPrices8[i] > stockPrices21[i]) {
+            trend = {trend: "No Trend Detected"}
+            break;
+          } else {
+            downtrendLoaded();
+          }
+        }
+      }
+
+      function downtrendLoaded() {
+        trend = {trend: "Downtrend Detected"}
+      }
+
+      checkUptrend();
+
+      res.json(trend)
+  })
+})
+
+})
 }

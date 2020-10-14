@@ -61,9 +61,8 @@ module.exports = function (app) {
         });
         
         for (let index = 0; index < items.length; index++) {
-          console.log(items[index].id);
-          console.log(stockId);
           if (stockId === items[index].id) {
+            console.log(items);
             res.render("dashboard", { 
               searchHistory: items,
               newSearch: items[index]

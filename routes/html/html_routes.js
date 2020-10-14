@@ -19,7 +19,7 @@ module.exports = function (app) {
   });
 
   app.get("/login", checkNotAuth, function (req, res) {
-    res.render("login");
+    res.render("login", {message: req.flash('error')});
   });
 
   app.get("/logout", checkAuth, function (req, res) {
@@ -31,23 +31,23 @@ module.exports = function (app) {
     res.render("signup");
   });
 
-  app.get("/dashboard/", checkAuth, async function (req, res) {
-    let searchHistory = await axios.get("http://localhost:3001/api/searches");
-
-    res.render("dashboard", { 
-      searchHistory: searchHistory.data
-     });
-  });
-
-  app.get("/dashboard/:id", checkAuth, async function (req, res) {
+  app.get("/dashboard/:id?", checkAuth, async function (req, res) {
     let stockId = req.params.id
-    console.log("ButI am here" + stockId);
-    let searchHistory = await axios.get("http://localhost:3001/api/searches");
-    let newSearch = await axios.get("http://localhost:3001/api/stocks/" + stockId);
-    res.render("dashboard", { 
-      searchHistory: searchHistory.data,
-      newSearch: newSearch.data
+
+    if (!stockId) {
+      let searchHistory = await axios.get("http://localhost:3001/api/searches");
+      
+      res.render("dashboard", { 
+        searchHistory: searchHistory.data
+      });
+    } else {
+      let searchHistory = await axios.get("http://localhost:3001/api/searches");
+      let newSearch = await axios.get("http://localhost:3001/api/stocks/" + stockId);
+      res.render("dashboard", { 
+        searchHistory: searchHistory.data,
+        newSearch: newSearch.data
      });
+    }
   });
 
   // Middleware to not allow access to the list without being signed in

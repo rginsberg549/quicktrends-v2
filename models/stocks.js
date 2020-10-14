@@ -9,7 +9,10 @@ module.exports = function (sequelize, DataTypes) {
     website: DataTypes.STRING,
     ceo: DataTypes.STRING,
     sector: DataTypes.STRING,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    eps: DataTypes.FLOAT(2),
+    grossProfitRatio: DataTypes.FLOAT(2),
+    netIncomeRatio: DataTypes.FLOAT(2)
   });
   return Stock;
 };

@@ -43,11 +43,11 @@
       <li class="date h5"><time datetime="2016-04-01T19:00">{{newSearch.date}}</time></li>
       <li class="ceo-name h5">CEO: {{newSearch.ceo}}</li>
       <li class="industry h5">Sector: {{newSearch.sector}}</li>
-      <li class="current-price h5">Current Price: {{newSearch.price}} {{newSearch.currency}}</li>
+      <li class="current-price h5">Current Price: {{newSearch.price}} {{newSearch.currency}} {{newSearch.currency}}</li>
       <li class="dividends h5">Last Dividend: {{newSearch.lastDiv}}</li>
-      <li class="eps h5">EPS</li>
-      <li class="gross-profit-ratio h5">GROSS PROFIT RATIO</li>
-      <li class="net-income-ratio h5">NET INCOME RATIO</li>
+      <li class="eps h5">Earnings Per Share: {{newSearch.eps}}</li>
+      <li class="gross-profit-ratio h5">Gross Profit Ratio: {{newSearch.grossProfitRatio}}</li>
+      <li class="net-income-ratio h5">Net Income Ratio: {{newSearch.netIncomeRatio}}</li>
     </ul>
     <section id="stock-chart-section" class="row"></section>
   </div>

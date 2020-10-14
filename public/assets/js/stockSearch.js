@@ -1,7 +1,6 @@
 const stockInput = $("#stockInput");
 const submit = $("#stockSearch");
-const trashBtn = $("#trash-btn");
-const stockAnchor = $("#stockAnchor");
+const trashBtn = $(".trash-btn");
 
 function submitStock(event) {
   event.preventDefault();
@@ -15,7 +14,7 @@ function submitStock(event) {
 }
 
 function deleteStock() {
-  const data_id = trashBtn.parent().data("id");
+  const data_id = $(this).parent().data("id");
   $.ajax({
     method: "DELETE",
     url: "/api/stocks/" + data_id,
@@ -48,8 +47,8 @@ function deleteStock() {
 // })
 
 submit.on("click", submitStock);
-trashBtn.on("click", deleteStock);
-stockAnchor.click(function(event){
+$(document).on("click", ".trash-btn", deleteStock);
+$(document).on("click", ".stockAnchor", function(event){
   console.log("something")
   event.preventDefault();
   let stock = $(this).attr("data-name")

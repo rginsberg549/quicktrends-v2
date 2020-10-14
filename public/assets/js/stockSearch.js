@@ -49,10 +49,8 @@ function deleteStock() {
 submit.on("click", submitStock);
 $(document).on("click", ".trash-btn", deleteStock);
 $(document).on("click", ".stockAnchor", function(event){
-  console.log("something")
   event.preventDefault();
   let stock = $(this).attr("data-name")
-  console.log("stock")
   $.ajax({
     method: "POST",
     url: "/api/stocks/" + stock,

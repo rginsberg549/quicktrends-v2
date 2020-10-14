@@ -10,7 +10,7 @@ module.exports = function (app) {
     "/api/login",
     passport.authenticate("local", {
       successRedirect: "/dashboard",
-      failureRedirect: "/login",
+      failureRedirect: "/",
       failureFlash: true,
     })
   );

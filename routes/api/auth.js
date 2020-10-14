@@ -6,23 +6,39 @@ module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
-  app.post("/api/login", passport.authenticate("local"), (req, res) => {
-    // Sending back a password, even a hashed password, isn't a good idea
-    res.redirect("/dashboard");
-  });
+  app.post(
+    "/api/login",
+    passport.authenticate("local", {
+      successRedirect: "/dashboard",
+      failureRedirect: "/login",
+      failureFlash: true,
+    })
+  );
 
   app.post("/api/signup", (req, res) => {
-    db.User.create({
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-    })
-      .then(() => {
-        res.redirect("/login");
+    const errMessage =
+      "Please make sure all of the fields are filled in before signing up.";
+    if (req.body.first_name == "") {
+      res.render("signup", { message: errMessage });
+    } else if (req.body.last_name == "") {
+      res.render("signup", { message: errMessage });
+    } else if (req.body.email == "") {
+      res.render("signup", { message: errMessage });
+    } else if (req.body.password == "") {
+      res.render("signup", { message: errMessage });
+    } else {
+      db.User.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: req.body.password,
       })
-      .catch((err) => {
-        res.status(401).json(err);
-      });
+        .then(() => {
+          res.redirect("/login");
+        })
+        .catch((err) => {
+          res.status(401).json(err);
+        });
+    }
   });
 };

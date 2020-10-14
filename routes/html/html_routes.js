@@ -19,7 +19,7 @@ module.exports = function (app) {
   });
 
   app.get("/login", checkNotAuth, function (req, res) {
-    res.render("login");
+    res.render("login", {message: req.flash('error')});
   });
 
   app.get("/logout", checkAuth, function (req, res) {

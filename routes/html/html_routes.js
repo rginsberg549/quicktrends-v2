@@ -4,6 +4,7 @@
 
 // Dependencies
 // =============================================================
+const axios = require("axios");
 var path = require("path");
 var db = require("../../models/");
 
@@ -30,22 +31,23 @@ module.exports = function (app) {
     res.render("signup");
   });
 
-  app.get("/dashboard", checkAuth, function (req, res) {
-    db.Stock.findAll({
-      where: {
-        // user_id is the column name in the database
-        // req.user.id is the id of the user signed in
-        user_id: req.user.id,
-      },
-    }).then((data) => {
-      console.log(data);
-      let stocks = [];
-      data.forEach((element) => {
-        stocks.push(element.dataValues);
+  app.get("/dashboard/:id?", checkAuth, async function (req, res) {
+    let stockId = req.params.id
+
+    if (!stockId) {
+      let searchHistory = await axios.get("http://localhost:3001/api/searches");
+      
+      res.render("dashboard", { 
+        searchHistory: searchHistory.data
       });
-      console.log(stocks);
-      res.render("dashboard", { stocks: stocks });
-    });
+    } else {
+      let searchHistory = await axios.get("http://localhost:3001/api/searches");
+      let newSearch = await axios.get("http://localhost:3001/api/stocks/" + stockId);
+      res.render("dashboard", { 
+        searchHistory: searchHistory.data,
+        newSearch: newSearch.data
+     });
+    }
   });
 
   // Middleware to not allow access to the list without being signed in

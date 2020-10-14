@@ -19,43 +19,12 @@
   <span id="time-remaining"></span>
 </section>
 
-<!--
-<section id="company-card-section" class="row mx-auto d-flex justify-content-center">
-  <div>
-    <div id="recents-card" class="card h-100 col-sm-auto" style="width: 18rem">
-      <h2>Recent Searches</h2>
-      <ul id="recents-list" class="list-group list-group-flush">
-        <li class="list-group-item">Hello World</li>
-        <li class="list-group-item">Hello World</li>
-        <li class="list-group-item">Hello World</li>
-        <li class="list-group-item">Hello World</li>
-      </ul>
-    </div>
-  </div>
-  <div id="company-card" class="card h-100 col-sm-auto mx-0" style="width: 40rem ">
-    <div class="mx-auto py-2 d-flex justify-content-center">
-      <img class="company-image mr-3" width="40" height="40">
-      <h2 class="company-name">COMPANY NAME</h2>
-    </div>
-    <ul id="company-card-list" class="mx-5">
-      <li id="trend-text" class="h6">Trend Text</li>
-      <li class="date h6"><time datetime="2016-04-01T19:00">10-10-2020</time></li>
-      <li class="ceo-name h6">CEO-NAME</li>
-      <li class="industry h6">INDUSTRY</li>
-      <li class="current-price h6">CURRENT PRICE</li>
-      <li class="eps h6">EPS</li>
-      <li class="dividends h6">DIVIDENDS</li>
-      <li class="gross-profit-ratio h6">GROSS PROFIT RATIO</li>
-      <li class="net-income-ratio h6">NET INCOME RATIO</li>
-    </ul>
-    <div id="stock-chart-section" class="row">
-    </div>
-    -->
 
-    <div id="recents-card" class="card h-100 col" style="width: 14rem">
+<section id="company-card-section" class="row mx-auto d-flex justify-content-center">
+  <div id="recents-card" class="card h-100 col" style="width: 14rem">
       <h4>Recent Searches</h4>
       <ul id="recents-list" class="list-group list-group-flush">
-        {{#each stocks}}
+        {{#each searchHistory}}
         <li data-id={{this.id}} class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
           <a href="" class="h5" >{{this.name}}</a> 
           <button id="trash-btn" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button> 
@@ -63,10 +32,27 @@
         {{/each}}
       </ul>
     </div>
+
+  <div id="company-card" class="card h-100 col-sm-auto mx-0" style="width: 40rem ">
+    <div class="mx-auto py-2 d-flex justify-content-center">
+      <img class="company-image mr-3" width="40" height="40" src={{newSearch.image}}>
+      <h2 class="company-name"><a href={{newSearch.website}}>{{newSearch.companyName}}</a></h2>
+    </div>
+    <ul id="company-card-list" class="mx-5">
+      <li id="trend-text" class="h6">Trend Text</li>
+      <li class="date h6"><time datetime="2016-04-01T19:00">{{newSearch.date}}</time></li>
+      <li class="ceo-name h6">CEO: {{newSearch.ceo}}</li>
+      <li class="industry h6">Sector: {{newSearch.sector}}</li>
+      <li class="current-price h6">Current Price: {{newSearch.price}} {{newSearch.currency}}</li>
+      <li class="dividends h6">Last Dividend: {{newSearch.lastDiv}}</li>
+      <li class="eps h6">EPS</li>
+      <li class="gross-profit-ratio h6">GROSS PROFIT RATIO</li>
+      <li class="net-income-ratio h6">NET INCOME RATIO</li>
+    </ul>
+    <section id="stock-chart-section" class="row"></section>
   </div>
 
-{{!-- <section id="stock-chart-section" class="row">
-</section> --}}
+
 
 {{!-- <section id="newsfeed" class="">
   <h3 class="newsfeed-section-title"></h3>

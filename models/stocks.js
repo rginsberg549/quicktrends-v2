@@ -1,8 +1,15 @@
 module.exports = function (sequelize, DataTypes) {
   var Stock = sequelize.define("Stock", {
-    // Giving the Stock model a name of type STRING
     name: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
+    price: DataTypes.FLOAT(2),
+    lastDiv: DataTypes.FLOAT(2),
+    currency: DataTypes.STRING,
+    companyName: DataTypes.STRING,
+    website: DataTypes.STRING,
+    ceo: DataTypes.STRING,
+    sector: DataTypes.STRING,
+    image: DataTypes.STRING
   });
   return Stock;
 };

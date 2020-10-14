@@ -1,9 +1,11 @@
 const stockInput = $("#stockInput");
 const submit = $("#stockSearch");
 const trashBtn = $(".trash-btn");
+const companyCard = $(".company-card-section")
 
 function submitStock(event) {
   event.preventDefault();
+  
   let stock = stockInput.val();
   $.ajax({
     method: "POST",

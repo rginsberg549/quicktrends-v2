@@ -89,13 +89,13 @@ module.exports = function (app) {
             console.log("Updatimg an existing stock");
             db.Stock.update(
               {
-                price: response.data[0].price,
-                lastDiv: response.data[0].lastDiv,
-                companyName: response.data[0].companyName,
-                website: response.data[0].website,
-                ceo: response.data[0].ceo,
-                sector: response.data[0].sector,
-                image: response.data[0].image,
+                price: profile.data[0].price,
+                lastDiv: profile.data[0].lastDiv,
+                companyName: profile.data[0].companyName,
+                website: profile.data[0].website,
+                ceo: profile.data[0].ceo,
+                sector: profile.data[0].sector,
+                image: profile.data[0].image,
                 eps: incomeStatement.data[0].eps,
                 grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
                 netIncomeRatio: incomeStatement.data[0].netIncomeRatio

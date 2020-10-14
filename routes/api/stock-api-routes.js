@@ -42,7 +42,7 @@ module.exports = function (app) {
       .then((response) => {
         //console.log(response)
         db.Stock.create({
-          name: req.params.name,
+          name: req.params.name.toUpperCase(),
           user_id: req.user.id,
           price: response.data[0].price,
           lastDiv: response.data[0].lastDiv,

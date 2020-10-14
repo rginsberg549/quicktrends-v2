@@ -19,7 +19,7 @@ function deleteStock() {
     method: "DELETE",
     url: "/api/stocks/" + data_id,
   }).then(function () {
-    location.reload();
+    location.replace("/dashboard/");
   });
 }
 

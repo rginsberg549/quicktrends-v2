@@ -63,7 +63,7 @@ module.exports = function (app) {
         
         axios({
           method: "GET",
-          url: "http://localhost:3001/api/trend/" + stockSymbol
+          url: "/api/trend/" + stockSymbol
         }).then((trend) => {
           console.log(trend.data.trend);
           db.Stock.findOne({

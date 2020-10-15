@@ -52,23 +52,13 @@
     <section id="stock-chart-section" class="row"></section>
   </div>
 
-
-
-{{!-- <section id="newsfeed" class="">
-  <h3 class="newsfeed-section-title"></h3>
-  <div>
-    <div class="">
-      <div class="">
-        <ul id="company-article-list" class=""></ul>
-      </div>
-    </div>
-  </div>
-</section> --}}
-
 <div id="newsfeed" class="carousel slide" data-ride="carousel">
+  {{#each newsFeed}}
   <div class="carousel-inner">
-    
+    <img src="{{newsFeedImg}}" alt="">
+    <a href="{{webURL}}">{{abstract}}</a>
   </div>
+  {{/each}}
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -81,4 +71,3 @@
 
 <script src="/assets/js/stockSearch.js"></script>
 <!-- <script src="/assets/js/trendChart.js"></script>
-<script src="/assets/js/companyNewsfeed.js"></script> 

@@ -19,7 +19,7 @@ module.exports = function (app) {
   });
 
   app.get("/login", checkNotAuth, function (req, res) {
-    res.render("login", {message: req.flash('error')});
+    res.render("login", { message: req.flash("error") });
   });
 
   app.get("/logout", checkAuth, function (req, res) {
@@ -44,37 +44,63 @@ module.exports = function (app) {
         data.forEach((element) => {
           items.push(element.dataValues);
         });
-        res.render("dashboard", { 
-          searchHistory: items
-        })
-      })
+        res.render("dashboard", {
+          searchHistory: items,
+        });
+      });
     } else {
-     db.Stock.findAll({
-       where: {
-         user_id: req.user.id,
+      db.Stock.findAll({
+        where: {
+          user_id: req.user.id,
         },
-      })
-      .then((data) => {
+      }).then((data) => {
         const items = [];
         data.forEach((element) => {
           items.push(element.dataValues);
         });
-        
+
         for (let index = 0; index < items.length; index++) {
           if (stockId === items[index].id) {
-            console.log(items);
-            res.render("dashboard", { 
-              searchHistory: items,
-              newSearch: items[index]
+            let nytAPIKey = "&api-key=iabwIkv6ykHl3BTclLtwozsw8QZXDrxl";
+            
+            axios({
+              method: "GET",
+              url:
+                "https://api.nytimes.com/svc/search/v2/articlesearch.json?" +
+                items[index].companyName +
+                nytAPIKey,
+            }).then(function (data) {
+              let newsFeedResponse = data.data.response.docs;
+              console.log(newsFeedResponse);
+              
+              let newsFeedObj = [];
+              for (let index = 0; index < newsFeedResponse.length; index++) {
+
+                if(newsFeedResponse[index].multimedia[7] != null) {
+                   let tempObj = {
+                    abstract: newsFeedResponse[index].abstract,
+                    newsFeedImg: "https://www.nytimes.com/" + newsFeedResponse[index].multimedia[7].url,
+                    webURL: newsFeedResponse[index].web_url
+                  };
+                  newsFeedObj.push(tempObj);
+                } else {
+                  continue
+                }
+              }
+              
+              res.render("dashboard", {
+                searchHistory: items,
+                newSearch: items[index],
+                newsFeed: newsFeedObj,
+              });
             });
-            break
-        } else {
-          console.log("error");
+          } else {
+            console.log("error");
+          }
         }
-      }
-    })
-  }
-}) 
+      });
+    }
+  });
 
   // Middleware to not allow access to the list without being signed in
   function checkAuth(req, res, next) {
@@ -89,4 +115,4 @@ module.exports = function (app) {
     }
     return next();
   }
-}
+};

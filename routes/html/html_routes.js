@@ -61,7 +61,7 @@ module.exports = function (app) {
 
         for (let index = 0; index < items.length; index++) {
           if (stockId === items[index].id) {
-            let nytAPIKey = "&api-key=iabwIkv6ykHl3BTclLtwozsw8QZXDrxl";
+            let nytAPIKey = process.env.nytAPIKey;
             
             axios({
               method: "GET",

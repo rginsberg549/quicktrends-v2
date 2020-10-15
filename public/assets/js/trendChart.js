@@ -40,7 +40,7 @@ function count() {
 }
 
 function bigFunction(userInput) {
-  apiKey = "ZY0GHO5HP0KA7RXS";
+  apiKey = process.env.bigFunctionApiKey;
   queryUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${userInput}&apikey=${apiKey}`;
 
   var stockLabels = [];

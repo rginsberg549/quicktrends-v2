@@ -25,7 +25,7 @@ module.exports = function (app) {
   });
 
   app.post("/api/stocks/:name", function (req, res) {
-    const apikey = "c08946528f1aa8ab38e951cb961b2d08";
+    const apikey = process.env.appPostKey;
     const stockSymbol = req.params.name.toUpperCase();
 
     axios({
@@ -35,14 +35,13 @@ module.exports = function (app) {
       headers: {
         "content-type": "application/octet-stream",
         "x-rapidapi-host": "financial-modeling-prep.p.rapidapi.com",
-        "x-rapidapi-key": "c23481d564msh4d48ca2d97c6375p1be85ejsna769421f074b",
+        "x-rapidapi-key": process.env.xRapidApiKey,
         useQueryString: true,
       },
       params: {
         apikey: apikey,
       },
     }).then((profile) => {
-
       axios({
         method: "GET",
         url:
@@ -52,18 +51,16 @@ module.exports = function (app) {
         headers: {
           "content-type": "application/octet-stream",
           "x-rapidapi-host": "financial-modeling-prep.p.rapidapi.com",
-          "x-rapidapi-key":
-            "c23481d564msh4d48ca2d97c6375p1be85ejsna769421f074b",
+          "x-rapidapi-key": process.env.xRapidApiKey,
           useQueryString: true,
         },
         params: {
           apikey: apikey,
         },
-      }).then((incomeStatement)=> {
-        
+      }).then((incomeStatement) => {
         axios({
           method: "GET",
-          url: "https://stark-sea-26117.herokuapp.com/api/trend/" + stockSymbol
+          url: "https://stark-sea-26117.herokuapp.com/api/trend/" + stockSymbol,
         }).then((trend) => {
           console.log(trend.data.trend);
           db.Stock.findOne({
@@ -72,31 +69,11 @@ module.exports = function (app) {
               name: stockSymbol,
             },
           }).then((stockExists) => {
-          if (stockExists == null) {
-            console.log("Posting a new stock");
-            db.Stock.create({
-              name: stockSymbol,
-              user_id: req.user.id,
-              price: profile.data[0].price,
-              lastDiv: profile.data[0].lastDiv,
-              companyName: profile.data[0].companyName,
-              website: profile.data[0].website,
-              ceo: profile.data[0].ceo,
-              sector: profile.data[0].sector,
-              image: profile.data[0].image,
-              eps: incomeStatement.data[0].eps,
-              grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
-              netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
-              trend: trend.data.trend
-            }).then(function (dbStock) {
-              return res.json(dbStock);
-            }).catch(err => {
-              console.log(err);
-            });
-          } else {
-            console.log("Updatimg an existing stock");
-            db.Stock.update(
-              {
+            if (stockExists == null) {
+              console.log("Posting a new stock");
+              db.Stock.create({
+                name: stockSymbol,
+                user_id: req.user.id,
                 price: profile.data[0].price,
                 lastDiv: profile.data[0].lastDiv,
                 companyName: profile.data[0].companyName,
@@ -107,141 +84,162 @@ module.exports = function (app) {
                 eps: incomeStatement.data[0].eps,
                 grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
                 netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
-                trend: trend.data.trend
-              },
-              {
-                where: {
-                  user_id: req.user.id,
-                  name: stockSymbol,
+                trend: trend.data.trend,
+              })
+                .then(function (dbStock) {
+                  return res.json(dbStock);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            } else {
+              console.log("Updatimg an existing stock");
+              db.Stock.update(
+                {
+                  price: profile.data[0].price,
+                  lastDiv: profile.data[0].lastDiv,
+                  companyName: profile.data[0].companyName,
+                  website: profile.data[0].website,
+                  ceo: profile.data[0].ceo,
+                  sector: profile.data[0].sector,
+                  image: profile.data[0].image,
+                  eps: incomeStatement.data[0].eps,
+                  grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
+                  netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
+                  trend: trend.data.trend,
                 },
-                returning: true,
-                plain: true,
-              }
-            ).then(() => {
-              db.Stock.findOne({
-                where: {
-                  user_id: req.user.id,
-                  name: stockSymbol,
-                },
-              }).then((newStockData) => {
-                res.json(newStockData);
+                {
+                  where: {
+                    user_id: req.user.id,
+                    name: stockSymbol,
+                  },
+                  returning: true,
+                  plain: true,
+                }
+              ).then(() => {
+                db.Stock.findOne({
+                  where: {
+                    user_id: req.user.id,
+                    name: stockSymbol,
+                  },
+                }).then((newStockData) => {
+                  res.json(newStockData);
+                });
               });
-            });
-          }
+            }
+          });
         });
       });
     });
-  });
-  
-  
-  app.delete("/api/stocks/:id", function (req, res) {
-    db.Stock.destroy({
-      where: {
-        id: req.params.id,
-      },
-    })
-    .then(function (dbStock) {
-    res.json(dbStock);
-  })
-});
 
-app.get("/api/trend/:id", function (req, res) {
-  const apiKey = "ZY0GHO5HP0KA7RXS";
-  const stockSymbol = req.params.id.toUpperCase();
+    app.delete("/api/stocks/:id", function (req, res) {
+      db.Stock.destroy({
+        where: {
+          id: req.params.id,
+        },
+      }).then(function (dbStock) {
+        res.json(dbStock);
+      });
+    });
 
-  var stockLabels = [];
-  let stockPrices8 = [];
-  let stockPrices21 = [];
-  let stockRealPriceBucket = [];
-  let stockRealPrice = [];
+    app.get("/api/trend/:id", function (req, res) {
+      const apiKey = "ZY0GHO5HP0KA7RXS";
+      const stockSymbol = req.params.id.toUpperCase();
 
+      var stockLabels = [];
+      let stockPrices8 = [];
+      let stockPrices21 = [];
+      let stockRealPriceBucket = [];
+      let stockRealPrice = [];
 
-  axios({
-    method: "GET",
-    url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="  + stockSymbol + "&apikey=" + apiKey
-  }).then(function (data) {
-    
-    var convertSeriesObj = Object.entries(data.data["Time Series (Daily)"]);
-    
-    for (i = 0; i < 50; i++) {
-      stockRealPrice.unshift(convertSeriesObj[i][1]["1. open"]);
-    }
-    
-    for (i = 0; i < 30; i++) {
-      stockRealPriceBucket.unshift(convertSeriesObj[i][1]["1. open"]);
-      stockLabels.unshift(convertSeriesObj[i][0]);
-    }
-    
-    for (i = 0; i > -30; i--) {
-      var currentInt = 50 + i;
-      var ArrStartNum = currentInt - 21;
-      var divider = 1;
-      var total = 0;
-      var divideIt = 0;
-      
-      while (ArrStartNum < currentInt) {
-        total += parseFloat(stockRealPrice[ArrStartNum]);
-        divideIt = total / divider;
-        ArrStartNum++;
-        divider++;
-      }
-      
-      stockPrices21.unshift(divideIt.toFixed(2));
-    }
+      axios({
+        method: "GET",
+        url:
+          "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" +
+          stockSymbol +
+          "&apikey=" +
+          apiKey,
+      }).then(function (data) {
+        var convertSeriesObj = Object.entries(data.data["Time Series (Daily)"]);
 
-    for (i = 0; i > -30; i--) {
-      var currentInt = 50 + i;
-      var ArrStartNum = currentInt - 8;
-      var divider = 1;
-      var total = 0;
-      var divideIt = 0;
-      while (ArrStartNum < currentInt) {
-        total += parseFloat(stockRealPrice[ArrStartNum]);
-        divideIt = total / divider;
-        ArrStartNum++;
-        divider++;
-      }
-      
-      stockPrices8.unshift(divideIt.toFixed(2));
-    }
-
-    let trend
-    
-    function checkUptrend() {
-      for (var i = 23; i < 31; i++) {
-        if (stockPrices8[i] < stockPrices21[i]) {
-          checkdownTrend();
-          break;
-        } else {
-          uptrendLoaded();
+        for (i = 0; i < 50; i++) {
+          stockRealPrice.unshift(convertSeriesObj[i][1]["1. open"]);
         }
-      }
-    }
 
-    function uptrendLoaded() {
-      trend = {trend: "Uptrend Detected"}
-    }
+        for (i = 0; i < 30; i++) {
+          stockRealPriceBucket.unshift(convertSeriesObj[i][1]["1. open"]);
+          stockLabels.unshift(convertSeriesObj[i][0]);
+        }
 
-      function checkdownTrend() {
-        for (var i = 23; i < 31; i++) {
-          if (stockPrices8[i] > stockPrices21[i]) {
-            trend = {trend: "No Trend Detected"}
-            break;
-          } else {
-            downtrendLoaded();
+        for (i = 0; i > -30; i--) {
+          var currentInt = 50 + i;
+          var ArrStartNum = currentInt - 21;
+          var divider = 1;
+          var total = 0;
+          var divideIt = 0;
+
+          while (ArrStartNum < currentInt) {
+            total += parseFloat(stockRealPrice[ArrStartNum]);
+            divideIt = total / divider;
+            ArrStartNum++;
+            divider++;
+          }
+
+          stockPrices21.unshift(divideIt.toFixed(2));
+        }
+
+        for (i = 0; i > -30; i--) {
+          var currentInt = 50 + i;
+          var ArrStartNum = currentInt - 8;
+          var divider = 1;
+          var total = 0;
+          var divideIt = 0;
+          while (ArrStartNum < currentInt) {
+            total += parseFloat(stockRealPrice[ArrStartNum]);
+            divideIt = total / divider;
+            ArrStartNum++;
+            divider++;
+          }
+
+          stockPrices8.unshift(divideIt.toFixed(2));
+        }
+
+        let trend;
+
+        function checkUptrend() {
+          for (var i = 23; i < 31; i++) {
+            if (stockPrices8[i] < stockPrices21[i]) {
+              checkdownTrend();
+              break;
+            } else {
+              uptrendLoaded();
+            }
           }
         }
-      }
 
-      function downtrendLoaded() {
-        trend = {trend: "Downtrend Detected"}
-      }
+        function uptrendLoaded() {
+          trend = { trend: "Uptrend Detected" };
+        }
 
-      checkUptrend();
+        function checkdownTrend() {
+          for (var i = 23; i < 31; i++) {
+            if (stockPrices8[i] > stockPrices21[i]) {
+              trend = { trend: "No Trend Detected" };
+              break;
+            } else {
+              downtrendLoaded();
+            }
+          }
+        }
 
-      res.json(trend)
-  })
-})
+        function downtrendLoaded() {
+          trend = { trend: "Downtrend Detected" };
+        }
 
-})
-}
+        checkUptrend();
+
+        res.json(trend);
+      });
+    });
+  });
+};

@@ -41,7 +41,7 @@
       <h2 class="company-name"><a href={{newSearch.website}}>{{newSearch.companyName}}</a></h2>
     </div>
     <ul id="company-card-list" class="mx-5">
-      <li id="trend-text" class="h5">Trend Text</li>
+      <li id="trend-text" class="h5 badge badge-success">{{newSearch.trend}}</li>
       <li class="date h5"><time datetime="2016-04-01T19:00">{{newSearch.date}}</time></li>
       <li class="ceo-name h5">CEO: {{newSearch.ceo}}</li>
       <li class="industry h5">Sector: {{newSearch.sector}}</li>
@@ -56,22 +56,15 @@
   {{/if}}
 
 
-
-  {{!-- <section id="newsfeed" class="">
-    <h3 class="newsfeed-section-title"></h3>
-    <div>
-      <div class="">
-        <div class="">
-          <ul id="company-article-list" class=""></ul>
-        </div>
-      </div>
-    </div> --}}
 </section>
 
 <div id="newsfeed" class="carousel slide" data-ride="carousel">
+  {{#each newsFeed}}
   <div class="carousel-inner">
-    
+    <img src="{{newsFeedImg}}" alt="">
+    <a href="{{webURL}}">{{abstract}}</a>
   </div>
+  {{/each}}
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -84,4 +77,3 @@
 
 <script src="/assets/js/stockSearch.js"></script>
 <!-- <script src="/assets/js/trendChart.js"></script>
-<script src="/assets/js/companyNewsfeed.js"></script> 

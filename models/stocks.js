@@ -12,7 +12,8 @@ module.exports = function (sequelize, DataTypes) {
     image: DataTypes.STRING,
     eps: DataTypes.FLOAT(2),
     grossProfitRatio: DataTypes.FLOAT(2),
-    netIncomeRatio: DataTypes.FLOAT(2)
+    netIncomeRatio: DataTypes.FLOAT(2),
+    trend: DataTypes.STRING
   });
   return Stock;
 };

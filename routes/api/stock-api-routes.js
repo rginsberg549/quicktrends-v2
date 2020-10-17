@@ -63,7 +63,7 @@ module.exports = function (app) {
         
         axios({
           method: "GET",
-          url: "https://stark-sea-26117.herokuapp.com/api/trend/" + stockSymbol
+          url: "http://localhost:3001/api/trend/" + stockSymbol
         }).then((trend) => {
           console.log(trend.data.trend);
           db.Stock.findOne({

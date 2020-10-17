@@ -99,3 +99,7 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+#newsfeed {
+	background-color: lightgrey;
+}

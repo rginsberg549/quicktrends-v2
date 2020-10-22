@@ -1,6 +1,5 @@
 body {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("/assets/pictures/backdrop.png");
+  background-color: lightgrey;
   background-size: cover no-repeat;
   overflow-x: hidden;
 }
@@ -71,17 +70,16 @@ li {
   min-height: 125px;
 }
 
-/* #company-card {
-	text-align: center;
-	margin-left: auto;
-    margin-right: auto;
-} */
+
 
 a {
-  color: #666;
+  color: #666 !important;
 }
 
-/*Home Page*/
+a:hover {
+  color: blue !important;
+}
+
 
 .logo {
   width: 160px;
@@ -102,4 +100,8 @@ ul {
 
 #newsfeed {
 	background-color: lightgrey;
+}
+
+img {
+  max-width: 100%;
 }

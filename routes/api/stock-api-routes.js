@@ -3,7 +3,6 @@ const axios = require("axios");
 
 module.exports = function (app) {
   app.get("/api/searches", function (req, res) {
-    console.log(req.user);
     db.Stock.findAll({
       where: {
         user_id: req.user.id,
@@ -69,7 +68,6 @@ module.exports = function (app) {
         }).catch((error) => {
           console.log(error);
         }).then((trend) => {
-          console.log(trend);
           db.Stock.findOne({
             where: {
               user_id: req.user.id,
@@ -79,10 +77,10 @@ module.exports = function (app) {
             console.log(error);
           }).then((stockExists) => {
           if (stockExists == null) {
-            console.log("Posting a new stock");
             db.Stock.create({
               name: stockSymbol,
               user_id: req.user.id,
+              date: profile.data[0].date,
               price: profile.data[0].price,
               lastDiv: profile.data[0].lastDiv,
               companyName: profile.data[0].companyName,
@@ -102,9 +100,9 @@ module.exports = function (app) {
               console.log(err);
             });
           } else {
-              console.log("Updatimg an existing stock");
               db.Stock.update(
                 {
+                  date: profile.data[0].date,
                   price: profile.data[0].price,
                   lastDiv: profile.data[0].lastDiv,
                   companyName: profile.data[0].companyName,

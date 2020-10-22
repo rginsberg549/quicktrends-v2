@@ -2,6 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   var Stock = sequelize.define("Stock", {
     name: DataTypes.STRING,
     user_id: DataTypes.INTEGER,
+    date: DataTypes.STRING,
     price: DataTypes.FLOAT(2),
     lastDiv: DataTypes.FLOAT(2),
     currency: DataTypes.STRING,

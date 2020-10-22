@@ -41,6 +41,8 @@ module.exports = function (app) {
       params: {
         apikey: apikey,
       },
+    }).catch((error) => {
+      console.log(error);
     }).then((profile) => {
       axios({
         method: "GET",
@@ -58,17 +60,23 @@ module.exports = function (app) {
         params: {
           apikey: apikey,
         },
+      }).catch((error) => {
+        console.log(error);
       }).then((incomeStatement) => {
         axios({
           method: "GET",
-          url: "https://quicktrends.herokuapp.com/api/stocks/" + stockSymbol
+          url: "https://quicktrends.herokuapp.com/api/trend/" + stockSymbol
+        }).catch((error) => {
+          console.log(error);
         }).then((trend) => {
-          console.log(trend.data.trend.trend);
+          console.log(trend);
           db.Stock.findOne({
             where: {
               user_id: req.user.id,
               name: stockSymbol,
             },
+          }).catch((error) => {
+            console.log(error);
           }).then((stockExists) => {
           if (stockExists == null) {
             console.log("Posting a new stock");
@@ -85,31 +93,15 @@ module.exports = function (app) {
               eps: incomeStatement.data[0].eps,
               grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
               netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
-              trend: trend.data.trend
+              trend: trend.data.trend.trend
+            }).catch((error) => {
+              console.log(error);
             }).then(function (dbStock) {
               return res.json(dbStock);
             }).catch(err => {
               console.log(err);
             });
           } else {
-            console.log("Updatimg an existing stock");
-            db.Stock.update(
-              {
-                price: profile.data[0].price,
-                lastDiv: profile.data[0].lastDiv,
-                companyName: profile.data[0].companyName,
-                website: profile.data[0].website,
-                ceo: profile.data[0].ceo,
-                sector: profile.data[0].sector,
-                image: profile.data[0].image,
-                eps: incomeStatement.data[0].eps,
-                grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
-                netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
-                trend: trend.data.trend.trend,
-              }).then(function (dbStock) {
-                return res.json(dbStock);
-              });
-            } else {
               console.log("Updatimg an existing stock");
               db.Stock.update(
                 {
@@ -133,12 +125,16 @@ module.exports = function (app) {
                   returning: true,
                   plain: true,
                 }
-              ).then(() => {
+              ).catch((error) => {
+                console.log(error);
+              }).then(() => {
                 db.Stock.findOne({
                   where: {
                     user_id: req.user.id,
                     name: stockSymbol,
                   },
+                }).catch((error) => {
+                  console.log(error);
                 }).then((newStockData) => {
                   res.json(newStockData);
                 });

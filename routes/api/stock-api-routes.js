@@ -61,7 +61,7 @@ module.exports = function (app) {
       }).then((incomeStatement) => {
         axios({
           method: "GET",
-          url: "http://localhost:3001/api/trend/" + stockSymbol,
+          url: "https://quicktrends.herokuapp.com/api/stocks/" + stockSymbol
         }).then((trend) => {
           console.log(trend.data.trend.trend);
           db.Stock.findOne({
@@ -70,11 +70,31 @@ module.exports = function (app) {
               name: stockSymbol,
             },
           }).then((stockExists) => {
-            if (stockExists == null) {
-              console.log("Posting a new stock");
-              db.Stock.create({
-                name: stockSymbol,
-                user_id: req.user.id,
+          if (stockExists == null) {
+            console.log("Posting a new stock");
+            db.Stock.create({
+              name: stockSymbol,
+              user_id: req.user.id,
+              price: profile.data[0].price,
+              lastDiv: profile.data[0].lastDiv,
+              companyName: profile.data[0].companyName,
+              website: profile.data[0].website,
+              ceo: profile.data[0].ceo,
+              sector: profile.data[0].sector,
+              image: profile.data[0].image,
+              eps: incomeStatement.data[0].eps,
+              grossProfitRatio: incomeStatement.data[0].grossProfitRatio,
+              netIncomeRatio: incomeStatement.data[0].netIncomeRatio,
+              trend: trend.data.trend
+            }).then(function (dbStock) {
+              return res.json(dbStock);
+            }).catch(err => {
+              console.log(err);
+            });
+          } else {
+            console.log("Updatimg an existing stock");
+            db.Stock.update(
+              {
                 price: profile.data[0].price,
                 lastDiv: profile.data[0].lastDiv,
                 companyName: profile.data[0].companyName,

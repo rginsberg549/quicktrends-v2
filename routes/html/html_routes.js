@@ -72,7 +72,6 @@ module.exports = function (app) {
                 nytAPIKey,
             }).then(function (data) {
               let newsFeedResponse = data.data.response.docs;
-              console.log(newsFeedResponse);
               
               let newsFeedObj = [];
               for (let index = 0; index < newsFeedResponse.length; index++) {

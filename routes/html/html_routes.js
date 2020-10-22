@@ -62,8 +62,6 @@ module.exports = function (app) {
         for (let index = 0; index < items.length; index++) {
           if (stockId === items[index].id) {
             let nytAPIKey = "&api-key=iabwIkv6ykHl3BTclLtwozsw8QZXDrxl";
-            console.log(items[index].companyName)
-            console.log(items)
             axios({
               method: "GET",
               url:

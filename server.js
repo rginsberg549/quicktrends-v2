@@ -11,15 +11,17 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
 const passport = require("./config/passport");
+var helpers = require('handlebars-helpers')();
 
 // Sets up the Express App
 // =============================================================
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication
 const flash = require("connect-flash");
 const app = express();
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -32,9 +34,9 @@ app.use(passport.session());
 app.use(flash());
 
 //Sets the view enngine to Handlebars
+app.set('view engine', 'handlebars')
+app.engine("handlebars", exphbs({ defaultLayout: "main", helpers: helpers}));
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
 
 // Routes
 // =============================================================
@@ -44,7 +46,7 @@ require("./routes/html/html_routes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({ force:  true }).then(function () {
+db.sequelize.sync({ force:  false }).then(function () {
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
   });

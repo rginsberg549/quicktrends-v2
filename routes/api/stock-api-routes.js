@@ -64,7 +64,7 @@ module.exports = function (app) {
       }).then((incomeStatement) => {
         axios({
           method: "GET",
-          url: "https://quicktrends.herokuapp.com/api/trend/" + stockSymbol
+          url: "http://localhost:3002/api/trend/" + stockSymbol //https://quicktrends.herokuapp.com/api/trend/" + stockSymbol
         }).catch((error) => {
           console.log(error);
         }).then((trend) => {

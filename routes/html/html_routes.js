@@ -92,8 +92,6 @@ module.exports = function (app) {
                 newsFeed: newsFeedObj,
               });
             });
-          } else {
-            console.log("error");
           }
         }
       });
